@@ -25,7 +25,7 @@ As of July 2026 (Claude Code with Ultraplan in research preview): Ultraplan offe
 ## Install
 
 ```
-/plugin marketplace add <your-github-user>/claude-oversee     # or a local path to this repo
+/plugin marketplace add jimkeecn/claude-oversee     # or a local path to this repo
 /plugin install claude-oversee@claude-oversee-marketplace
 ```
 
