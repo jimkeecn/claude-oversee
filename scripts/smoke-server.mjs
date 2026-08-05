@@ -90,6 +90,11 @@ const second = await api("POST", `${base}/api/reviews`, {
 assert(second?.reviewId === created.reviewId, "revision joins same thread");
 const thread = await api("GET", `${base}/api/reviews/${created.reviewId}`);
 assert(thread?.revisions?.length === 2, "thread has two revisions");
+assert(thread?.comments?.length === 0, "comments cleared on new revision");
+assert(
+  thread?.overallNotes === undefined,
+  "overall notes cleared on new revision",
+);
 
 const questions = await api("POST", `${base}/api/reviews`, {
   type: "questions",

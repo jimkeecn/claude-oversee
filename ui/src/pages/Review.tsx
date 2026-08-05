@@ -30,6 +30,7 @@ export function Review({ threadId }: { threadId: string }) {
   } | null>(null);
   const [orphanIds, setOrphanIds] = useState<Set<string>>(new Set());
   const seededRef = useRef(false);
+  const latestRevIdRef = useRef<string | null>(null);
 
   const handleOrphans = useCallback((ids: string[]) => {
     setOrphanIds((current) => {
@@ -47,6 +48,9 @@ export function Review({ threadId }: { threadId: string }) {
     fetchThread(threadId)
       .then((loaded) => {
         setThread(loaded);
+        const loadedLatest = loaded.revisions[loaded.revisions.length - 1];
+        if (loadedLatest && !latestRevIdRef.current)
+          latestRevIdRef.current = loadedLatest.id;
         if (!seededRef.current) {
           seededRef.current = true;
           setComments(loaded.comments ?? []);
@@ -56,6 +60,25 @@ export function Review({ threadId }: { threadId: string }) {
       .catch((error) => setLoadError(String(error)));
     return subscribe(threadId, {
       onThread: (updated) => {
+        const updatedLatest = updated.revisions[updated.revisions.length - 1];
+        const priorRevision = updated.revisions[updated.revisions.length - 2];
+        // a fresh revision after a decided one means the previous feedback was
+        // already delivered — start the drafts clean. Superseded-while-pending
+        // keeps in-flight drafts. Chat history carries over regardless.
+        if (
+          updatedLatest &&
+          latestRevIdRef.current &&
+          updatedLatest.id !== latestRevIdRef.current &&
+          priorRevision?.status === "decided"
+        ) {
+          setComments([]);
+          setOverallNotes("");
+          setAnswers([]);
+          setOrphanIds(new Set());
+          setActiveCommentId(null);
+          setSubmitBanner(null);
+        }
+        if (updatedLatest) latestRevIdRef.current = updatedLatest.id;
         setThread(updated);
         setViewIndex(null);
       },

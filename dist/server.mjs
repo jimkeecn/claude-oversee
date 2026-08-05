@@ -58,7 +58,7 @@ function intOr(envValue, fileValue, fallback) {
 }
 
 // src/shared/protocol.ts
-var PROTOCOL_VERSION = "0.2.0";
+var PROTOCOL_VERSION = "0.2.1";
 
 // src/server/store.ts
 import fs2 from "node:fs";
@@ -183,6 +183,9 @@ function createOrAppend(request) {
       updatedAt: now
     };
     threads.set(thread.id, thread);
+  } else {
+    thread.comments = [];
+    thread.overallNotes = void 0;
   }
   for (const rev of thread.revisions) {
     if (rev.status === "pending") {
@@ -209,9 +212,8 @@ function decide(threadId, request) {
   const revision = [...thread.revisions].reverse().find((rev) => rev.status === "pending");
   if (!revision)
     return { error: "no pending revision, answer in the terminal", code: 410 };
-  if (request.comments) thread.comments = request.comments;
-  if (request.overallNotes !== void 0)
-    thread.overallNotes = request.overallNotes;
+  thread.comments = request.comments ?? [];
+  thread.overallNotes = request.overallNotes;
   const result = request.decision === "approve" ? { decision: "allow" } : request.decision === "terminal" ? { decision: "ask" } : { decision: "deny", reason: composeReason(thread, request) };
   revision.status = "decided";
   revision.result = result;

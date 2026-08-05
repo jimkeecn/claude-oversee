@@ -1,6 +1,6 @@
 {
   "name": "claude-oversee",
   "description": "Review Claude's plans and clarifying questions in a local web app: highlight text, attach comments, chat with a cheap sidecar model, and send one concise decision back to the session.",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": { "name": "Junxi" }
 }

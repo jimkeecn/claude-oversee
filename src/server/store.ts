@@ -88,6 +88,12 @@ export function createOrAppend(request: CreateReviewRequest): {
       updatedAt: now,
     };
     threads.set(thread.id, thread);
+  } else {
+    // comments and overall notes are per-revision feedback: they were already
+    // delivered with the previous decision (kept in revision.result.reason),
+    // so a new revision starts clean. Chat history intentionally carries over.
+    thread.comments = [];
+    thread.overallNotes = undefined;
   }
   for (const rev of thread.revisions) {
     if (rev.status === "pending") {
@@ -123,9 +129,8 @@ export function decide(
   if (!revision)
     return { error: "no pending revision, answer in the terminal", code: 410 };
 
-  if (request.comments) thread.comments = request.comments;
-  if (request.overallNotes !== undefined)
-    thread.overallNotes = request.overallNotes;
+  thread.comments = request.comments ?? [];
+  thread.overallNotes = request.overallNotes;
 
   const result: DecisionResult =
     request.decision === "approve"

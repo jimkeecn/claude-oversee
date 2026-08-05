@@ -99,7 +99,7 @@ function isEnabled(cwd) {
 }
 
 // src/shared/protocol.ts
-var PROTOCOL_VERSION = "0.2.0";
+var PROTOCOL_VERSION = "0.2.1";
 
 // src/hook/main.ts
 async function main() {
