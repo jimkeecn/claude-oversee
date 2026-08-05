@@ -1,0 +1,12 @@
+{
+  "session_id": "fixture-session-1",
+  "transcript_path": "",
+  "cwd": "C:\\Junxi Project\\Skills Folder\\Claude-plugin-plan-hook",
+  "permission_mode": "plan",
+  "hook_event_name": "PreToolUse",
+  "tool_name": "ExitPlanMode",
+  "tool_use_id": "toolu_fixture_plan_2",
+  "tool_input": {
+    "plan": "# Fix auth token expiry (revised)\n\n## Context\nToken expiry check in auth/middleware.ts uses `<` instead of `<=`, so tokens expiring exactly at the boundary pass validation.\n\n## Changes\n- Fix the comparison and extract an `isExpired()` helper.\n- Split the migration into two PRs: middleware + helpers first, then the remaining call sites.\n- Add boundary-case tests: expiry at, before, and after now.\n\n## Verification\nRun `npm test -- auth`; all suites green. Add the smoke login to the e2e suite instead of a manual check."
+  }
+}

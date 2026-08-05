@@ -1,0 +1,23 @@
+{
+  "name": "claude-oversee",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "typecheck": "tsc -p tsconfig.json",
+    "verify-dist": "node scripts/build.mjs && git diff --exit-code -- dist",
+    "smoke:server": "node scripts/smoke-server.mjs",
+    "smoke:hook": "node scripts/smoke-hook.mjs",
+    "format": "prettier --write \"src/**/*.ts\" \"ui/src/**/*.{ts,tsx,css}\" \"scripts/*.mjs\" \"*.json\""
+  },
+  "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "esbuild": "^0.25.0",
+    "prettier": "^3.3.0",
+    "typescript": "^5.6.0"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "session_id": "fixture-session-1",
+  "transcript_path": "",
+  "cwd": "C:\\Junxi Project\\Skills Folder\\Claude-plugin-plan-hook",
+  "permission_mode": "plan",
+  "hook_event_name": "PreToolUse",
+  "tool_name": "AskUserQuestion",
+  "tool_use_id": "toolu_fixture_q_1",
+  "tool_input": {
+    "questions": [
+      {
+        "question": "Which token strategy should the refactor target?",
+        "header": "Auth method",
+        "multiSelect": false,
+        "options": [
+          {
+            "label": "Keep JWT, fix expiry only",
+            "description": "Smallest change, no client impact"
+          },
+          {
+            "label": "Move to rotating refresh tokens",
+            "description": "Bigger scope, schema change"
+          }
+        ]
+      },
+      {
+        "question": "Ship behind the beta flag?",
+        "header": "Rollout",
+        "multiSelect": false,
+        "options": [
+          { "label": "Yes - beta flag", "description": "Recommended" },
+          { "label": "No - ship to all" }
+        ]
+      }
+    ]
+  }
+}

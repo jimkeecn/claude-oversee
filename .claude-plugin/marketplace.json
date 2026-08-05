@@ -1,0 +1,11 @@
+{
+  "name": "claude-oversee-marketplace",
+  "owner": { "name": "Junxi" },
+  "plugins": [
+    {
+      "name": "claude-oversee",
+      "source": "./",
+      "description": "Web review hub for Claude Code plans and questions with a cheap sidecar chat."
+    }
+  ]
+}
